@@ -8,7 +8,7 @@ SECRET_NUMBER=$(( (RANDOM % 1000) + 1 ))
 echo "Enter your username:"
 read USERNAME
 
-# Check if username has been used before
+# Get username from database
 USER_ID=$($PSQL "SELECT user_id FROM users WHERE username = $USERNAME")
 
 # Check if this is a new username
