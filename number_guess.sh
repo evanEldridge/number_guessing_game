@@ -48,3 +48,16 @@ do
     # Increment number of guesses
     $NUMBER_OF_GUESSES++
 done
+
+# Increase games played and update database
+$GAMES_PLAYED++
+UPDATE_GAMES_PLAYED_RESULT=$($PSQL "UPDATE users SET games_played = $GAMES_PLAYED WHERE user_id = $USER_ID")
+
+# If this was the best game, update database
+if [[ $NUMBER_OF_GUESSES < $BEST_GAME]]
+then
+    $BEST_GAME=$NUMBER_OF_GUESSES
+    UPDATE_BEST_GAME_RESULT=$($PSQL "UPDATE users SET best_game = $BEST_GAME WHERE user_id = $USER_ID")
+fi
+
+echo You guessed it in $NUMBER_OF_GUESSES tries. The secret number was $SECRET_NUMBER. Nice job!
